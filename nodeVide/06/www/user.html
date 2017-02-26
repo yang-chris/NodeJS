@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+姓名：<input type="text" id="user" name="user"><br>
+密码：<input type="password" id="password" name="password"><br/>
+<input type="submit" value="注册" id="reg_btn"/>
+<input type="submit" value="登陆" id="login_btn"/>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script>
+    $(function () {
+        $('#reg_btn').click(function () {
+            $.ajax({
+                url: '/user',
+                data: {act: 'reg', user: $('#user').val(), password: $('#password').val()},
+                type: 'GET',
+                success: function (data) {
+                    var json = eval('('+data+')');
+                    if (json.ok) {
+                        alert('注册成功');
+                    }else{
+                        alert('注册失败:'+json.msg)
+                    }
+                },
+                error: function () {
+                    alert('通信错误');
+                }
+            })
+        });
+        $('#login_btn').click(function () {
+            $.ajax({
+                url:'/user',
+                data: {act: 'login', user: $('#user').val(), password: $('#password').val()},
+                type: 'GET',
+                success:function (data) {
+                    var json = eval('('+data+')');
+                    if (json.ok) {
+                        alert('登陆成功');
+                    }else{
+                        alert('登陆失败:'+json.msg)
+                    }
+                },
+                error:function () {
+                    alert('失败');
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
