@@ -12,9 +12,31 @@
 <input type="submit" value="登陆" id="login_btn"/>
 <script>
     $(function () {
-        var userVal=$('#user').val();
-        var passVal=$('#password').val();
+        //注册
+        $('#reg_btn').click(function () {
+            var userVal=$('#user').val();
+            var passVal=$('#password').val();
+            $.ajax({
+                url:'/reg',
+                data:{user:userVal,pass:passVal},
+                success:function (str) {
+                    console.log(str);
+                    if(str.ok){
+                        alert('注册成功');
+                    }else {
+                        alert('登录失败：'+str.msg);
+                    }
+                },
+                error:function () {
+                    alert('通信错误')
+                }
+            })
+        })
+
+        //登录
         $('#login_btn').click(function () {
+            var userVal=$('#user').val();
+            var passVal=$('#password').val();
             $.ajax({
                 url:'/login',
                 data:{user:userVal,pass:passVal},
@@ -22,6 +44,7 @@
                     console.log(str);
                     if(str.ok){
                         alert('登录成功');
+                        location.href='a.html'
                     }else {
                         alert('登录失败：'+str.msg);
                     }
